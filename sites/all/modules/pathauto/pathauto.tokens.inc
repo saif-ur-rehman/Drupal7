@@ -5,9 +5,6 @@
  * Token integration for the Pathauto module.
  */
 
-use Drupal\Core\Render\Element;
-use Drupal\Core\Render\BubbleableMetadata;
-
 /**
  * Implements hook_token_info().
  */
@@ -25,7 +22,7 @@ function pathauto_token_info() {
 /**
  * Implements hook_tokens().
  */
-function pathauto_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+function pathauto_tokens($type, $tokens, array $data = array(), array $options = array()) {
   $replacements = array();
 
   if ($type == 'array' && !empty($data['array'])) {
@@ -34,10 +31,11 @@ function pathauto_tokens($type, $tokens, array $data, array $options, Bubbleable
     foreach ($tokens as $name => $original) {
       switch ($name) {
         case 'join-path':
+          module_load_include('inc', 'pathauto');
           $values = array();
-          foreach (token_element_children($array) as $key) {
+          foreach (element_children($array) as $key) {
             $value = is_array($array[$key]) ? render($array[$key]) : (string) $array[$key];
-            $value = \Drupal::service('pathauto.alias_cleaner')->cleanString($value, $options);
+            $value = pathauto_cleanstring($value, $options);
             $values[] = $value;
           }
           $replacements[$original] = implode('/', $values);
