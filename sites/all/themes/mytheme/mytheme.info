@@ -10,4 +10,12 @@ stylesheets[all][] = css/960.css
 stylesheets[all][] = css/main.css
 
 ; Include Regions
+regions [header] = Header
 regions [content] = Content
+regions [sidebar_first] = First Sidebar
+regions [sidebar_second] = Second Sidebar
+regions [page_top] = Page Top
+regions [page_bottom] = Page Bottom
+regions [footer_left] = Footer Left
+regions [footer_right] = Footer Right
+regions [help] = Help
